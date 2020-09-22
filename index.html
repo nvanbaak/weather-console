@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Console</title>
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        .weather-condition {
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: blanchedalmond;
+        }
+    </style>
 </head>
 <body>
 
@@ -17,10 +23,25 @@
         <button id="city-submit">Search</button>
     </form>
 
+    <section id="results">
+        <h2>Results: </h2>
+        <div class="city-name"></div>
+        <div class="date"></div>
+        <div class="weather-condition"></div>
+        <div class="temp"></div>
+        <div class="humidity"></div>
+        <div class="wind-speed"></div>
+        <div class="UV index"></div>
+    </section>
+
 
 
     <!-- jQuery link -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Moment link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
 
     <script src="weatherconsole.js"></script>
 </body>
