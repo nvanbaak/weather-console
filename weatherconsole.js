@@ -19,11 +19,11 @@ $("#city-submit").on("click", function(event) {
 
         // Paste city name to Results
         var cityName = $("<h3>").text("——— " + response.name + " ———");
-        $(".city-name").append(cityName);
+        $("#results").append(cityName);
 
         // Paste date into results
         var date = $("<p>").text(moment().format("dddd, MMM do YYYY"));
-        $(".date").append(date);
+        $("#results").append(date);
 
         // Create weather "icon" and append
         var weatherCondition = response.weather[0].description;
@@ -33,16 +33,25 @@ $("#city-submit").on("click", function(event) {
         preString.addClass("small-font");
         postString.addClass("small-font");
 
-        $(".weather-condition").append(preString);
-        $(".weather-condition").append(weatherCondition);
-        $(".weather-condition").append(postString);
+        var weatherBox = $("<div>", {"class":"weather-condition"});
+
+        weatherBox.append(preString);
+        weatherBox.append(weatherCondition);
+        weatherBox.append(postString);
+
+        $("#results").append(weatherBox);
 
         // Paste temp into results
-        $(".temp").append($("<p>").text("Temp: " + ((response.main.temp - 273.15) * 1.80 + 32).toFixed(2) + "F"));
+        // I'm so sorry
+        $("#results").append($("<p>").text("Temp: " + ((response.main.temp - 273.15) * 1.80 + 32).toFixed(1) + "F"));
 
-// an icon representation of weather conditions, the humidity, the wind speed, and the UV index
+        // Paste humidity into results
+        $("#results").append($("<p>").text("Humidity: " + response.main.humidity));
+        
+        // the wind speed, 
+        // $("#results").append($("<p>").text("Humidity: " + response.main.humidity));
 
-
+        // and the UV index
 // Then grab lat/long and make a call to One Call API
 
         console.log(response);
