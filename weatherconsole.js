@@ -14,8 +14,8 @@ $("#city-submit").on("click", function(event) {
         url:queryURL,
         method:"GET"
     }).then( function(response) {
-
-        responseObj = response;
+        
+        $("#results").empty();
 
         // Paste city name to Results
         var cityName = $("<h3>").text("——— " + response.name + " ———");
@@ -48,17 +48,25 @@ $("#city-submit").on("click", function(event) {
         // Paste humidity into results
         $("#results").append($("<p>").text("Humidity: " + response.main.humidity));
         
-        // the wind speed, 
-        // $("#results").append($("<p>").text("Humidity: " + response.main.humidity));
+        // Wind speed 
+        $("#results").append($("<p>").text("Wind speed: " + response.wind.speed + "kph"));
 
-        // and the UV index
-// Then grab lat/long and make a call to One Call API
+        // Then grab lat/long and make a call to One Call API
+        var searchLat = response.coord.lat;
+        var searchLon = response.coord.lon;
+
+        var oneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+ searchLat + "&lon=" + searchLon + "&exclude=minutely,hourly,alerts&appid=" + APIKEY;
+
+        // $.ajax({
+        //     url:oneCallURL,
+        //     method:"GET"
+        // }).then( function(response) {
+
+        // });
+
+
 
         console.log(response);
     });
 
 });
-
-function kelvinToF(temp) {
-
-}
