@@ -55,18 +55,24 @@ $("#city-submit").on("click", function(event) {
         var searchLat = response.coord.lat;
         var searchLon = response.coord.lon;
 
-        var oneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+ searchLat + "&lon=" + searchLon + "&exclude=minutely,hourly,alerts&appid=" + APIKEY;
+        var oneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+ searchLat + "&lon=" + searchLon + "&exclude=minutely,hourly,alerts" + APIKEY;
 
-        // $.ajax({
-        //     url:oneCallURL,
-        //     method:"GET"
-        // }).then( function(response) {
+        $.ajax({
+            url:oneCallURL,
+            method:"GET"
+        }).then( function(subresponse) {
 
-        // });
+            console.log(subresponse);
+
+            // Now grab uv index
+
+            $("#results").append($("<p>").text("UV Index goes here after a comparison operation tells us what color to make it.  Then we go through a pared-down version of the above code only this time we use the forecast for the next five days."))
+
+
+        });
 
 
 
-        console.log(response);
     });
 
 });
