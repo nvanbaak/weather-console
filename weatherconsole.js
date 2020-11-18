@@ -15,6 +15,7 @@ $("#city-submit").on("click", function(event) {
         method:"GET"
     }).then( function(response) {
         
+        // Clear results
         $("#results").empty();
 
         // Paste city name to Results
@@ -28,16 +29,11 @@ $("#city-submit").on("click", function(event) {
         // Create weather "icon" and append
         var weatherCondition = response.weather[0].description;
         weatherCondition = $("<p>").text("The weather is: " + weatherCondition);
-        var preString = $("<p>").text("(icons take too long to load)");
-        var postString = $("<p>").text("(pretend I put one here)");
-        preString.addClass("small-font");
-        postString.addClass("small-font");
 
         var weatherBox = $("<div>", {"class":"weather-condition"});
 
-        weatherBox.append(preString);
         weatherBox.append(weatherCondition);
-        weatherBox.append(postString);
+
 
         $("#results").append(weatherBox);
 
