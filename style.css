@@ -108,12 +108,23 @@ li {
 
 li:hover {
     background-color: rgb(197, 175, 182);
+    cursor: pointer;
 }
 
-.weatherbox {
+.weather-panel1 {
+    margin-bottom: 20px;
+}
+
+.weather-panel2 .weatherbox {
     border-radius: 10px;
     border: 1px solid black;
     width: 30%;
+}
+
+.weather-panel1 .weatherbox {
+    border-radius: 10px;
+    border: 1px solid black;
+    width: 45%;
 }
 
 .conditionbox {
@@ -126,6 +137,30 @@ li:hover {
 
 .humbox {
     background-color: rgb(72, 141, 153);
+}
+
+.windbox {
+    background-color: rgb(144, 243, 218);
+}
+
+.uv-ext {
+    background-color: rgb(255, 58, 239);
+}
+
+.uv-v-high {
+    background-color: rgb(255, 38, 0);
+}
+
+.uv-high {
+    background-color: rgb(231, 73, 0);
+}
+
+.uv-med {
+    background-color: rgb(221, 224, 59);
+}
+
+.uv-low {
+    background-color: rgb(54, 202, 9);
 }
 
 .weatherbox h4 {

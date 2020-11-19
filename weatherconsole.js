@@ -110,11 +110,12 @@ function getWeather(cityname) {
         const todaysDay = `${getDayName(thisTime.getDay())}`;
         const todaysDate = `${thisTime.getMonth()}/${thisTime.getDate()}`;
 
-        // Add city name, date, and weather panel
+        // Add city name, date, and weather panels
         results
             .append($("<h2>").text(`——— ${response.city.name} ———`))
             .append($("<h3>").text(`${todaysDay} ${todaysDate}`))
-            .append($("<div>", {"class":"weather-panel flexwrap"}));
+            .append($("<div>", {"class":"weather-panel1 flexwrap"}))
+            .append($("<div>", {"class":"weather-panel2 flexwrap"}));
 
         // ### Weather Conditions ###
         
@@ -131,7 +132,7 @@ function getWeather(cityname) {
         const iconLabel = $("<p>").text(today.weather[0].description)
 
         // append
-        $(".weather-panel").append(
+        $(".weather-panel1").append(
             weatherBox
                 .append(weatherLabel)
                 .append($("<div>", {"class":"flexwrap"})
@@ -147,24 +148,91 @@ function getWeather(cityname) {
 
         const todaysTemp = $("<p>").text(((today.main.temp - 273.15) * 1.80 + 32).toFixed(1) + "F");
 
-        $(".weather-panel").append(
+        $(".weather-panel1").append(
             tempBox
                 .append(tempLabel)
                 .append(todaysTemp)
         );
  
-        // ### Humidity
+        // ### Humidity ###
 
         const humBox = $("<div>", {"class":"humbox weatherbox"});
         const humLabel = $("<h4>").text("Humidity");
 
-        $(".weather-panel").append(
+        $(".weather-panel2").append(
             humBox
                 .append(humLabel)
                 .append($("<p>").text(`${today.main.humidity}%`))
         )
 
+        // ### Wind Speed ###
 
+        const windBox = $("<div>", {"class":"windbox weatherbox"});
+        const windLabel = $("<h4>").text("Wind Speed");
+        // Convert meters/second to miles/hour
+        const windSpeed = (today.wind.speed * 2.23694).toFixed(0);
+
+        $(".weather-panel2").append(
+            windBox
+                .append(windLabel)
+                .append($("<p>").text(`${windSpeed} mph`))
+        )
+
+        // ### UV Levels ###
+
+        // This information is not provided by the API we're using, so we need to make an AJAX call to the one that does.  That means the UV information probably shows up after the 5 day forecast, but since weather-panel2 is already on the page we won't run into issues with content being out of order.
+
+        // Grab lat/long and make a call to One Call API
+        var searchLat = response.city.coord.lat;
+        var searchLon = response.city.coord.lon;
+
+        var oneCallURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${searchLat}&lon=${searchLon}&exclude=minutely,hourly,alerts&appid=${APIKEY}`;
+        
+        $.ajax({
+            url:oneCallURL,
+            method:"GET"
+        }).then( function(subresponse) {
+
+                console.log(subresponse);
+                
+                const uvBox = $("<div>", {"class":"weatherbox"});
+                const uvLabel = $("<h4>").text("UV Index");
+                
+                const uvi = subresponse.current.uvi;
+
+                // This switch statement rounds up the uv index and then uses that to determine the proper coloration for the uv box
+                switch (Math.ceil(uvi)) {
+                    case 0:
+                    case 1:
+                    case 2:
+                        uvBox.addClass("uv-low");
+                        break;
+                    case 3:
+                    case 4:
+                    case 5:
+                        uvBox.addClass("uv-med");
+                        break;
+                    case 6:
+                    case 7:
+                        uvBox.addClass("uv-high");
+                        break;
+                    case 8:
+                    case 9:
+                    case 10:
+                        uvBox.addClass("uv-v-high");
+                        break;
+                    default:
+                        uvBox.addClass("uv-ext");
+                        break;
+                }
+
+                $(".weather-panel2").append(
+                    uvBox
+                    .append(uvLabel)
+                    .append($("<p>").text(uvi))
+                    )
+        
+        });
 
         // ### 5 Day Forecast ###
 
@@ -176,7 +244,7 @@ function getWeather(cityname) {
         )
 
         // Add forecast boxes
-        for (let i = 7; i < list.length; i = i+7) {
+        for (let i = 7; i < list.length; i = i+8) {
             // Define variables
             let forecast = list[i];
             let time = new Date(forecast.dt * 1000);
@@ -204,46 +272,7 @@ function getWeather(cityname) {
         }
 
 
-
-
-
-
-
-        // // Paste date into results
-        // var date = $("<p>").text(moment().format("dddd, MMM do YYYY"));
-        // $("#results").append(date);
-
-        // // Create weather "icon" and append
-        // let iconSrc = `http://openweathermap.org/img/wn/${response.weather[0].icon}.png`;
-         
-        // var weatherCondition = $("<img>", {"src":iconSrc});
-
-        // var weatherBox = $("<div>", {"class":"weather-condition"});
-        // weatherBox.append(weatherCondition);
-        // $("#results").append(weatherBox);
-
-        // // Paste temp into results
-        // // I'm so sorry
-        // $("#results").append($("<p>").text("Temp: " + ((response.main.temp - 273.15) * 1.80 + 32).toFixed(1) + "F"));
-
-        // // Paste humidity into results
-        // $("#results").append($("<p>").text("Humidity: " + response.main.humidity));
         
-        // // Wind speed 
-        // $("#results").append($("<p>").text("Wind speed: " + response.wind.speed + "kph"));
-
-        // Then grab lat/long and make a call to One Call API
-        // var searchLat = response.coord.lat;
-        // var searchLon = response.coord.lon;
-
-        // var oneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat="+ searchLat + "&lon=" + searchLon + "&exclude=minutely,hourly,alerts" + APIKEY;
-
-        // $.ajax({
-        //     url:oneCallURL,
-        //     method:"GET"
-        // }).then( function(subresponse) {
-
-        //     console.log(subresponse);
 
         //     // Now grab uv index
 
