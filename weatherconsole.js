@@ -96,7 +96,7 @@ function getWeather(cityname) {
         //                SEARCH RESULTS
         // ===============================================
 
-        // ### Today's info ###
+        // ##### Today's info #####
 
         // Destructure the list out of the forecast
         const { list }  = response;
@@ -110,12 +110,13 @@ function getWeather(cityname) {
         const todaysDay = `${getDayName(thisTime.getDay())}`;
         const todaysDate = `${thisTime.getMonth()}/${thisTime.getDate()}`;
 
-        // Add city name and date
+        // Add city name, date, and weather panel
         results
             .append($("<h2>").text(`——— ${response.city.name} ———`))
-            .append($("<h3>").text(`${todaysDay} ${todaysDate}`));
+            .append($("<h3>").text(`${todaysDay} ${todaysDate}`))
+            .append($("<div>", {"class":"weather-panel flexwrap"}));
 
-        // Create box for weather
+        // ### Weather Conditions ###
         
         // Make box
         const weatherBox = $("<div>", {"class":"weatherbox conditionbox"})
@@ -126,23 +127,42 @@ function getWeather(cityname) {
         // Make icon
         const icon = $("<img>", {"src":`http://openweathermap.org/img/wn/${today.weather[0].icon}.png`});
 
-        // Make label
-        const label = $("<p>").text(today.weather[0].description)
+        // Label icon
+        const iconLabel = $("<p>").text(today.weather[0].description)
 
         // append
-        results.append(
+        $(".weather-panel").append(
             weatherBox
                 .append(weatherLabel)
-                .append(
-                    $("<div>")
-                        .append(icon)
-                        .append(label)
+                .append($("<div>", {"class":"flexwrap"})
+                    .append(icon)
+                    .append(iconLabel)
                 )
         )
 
+        // ### Temperature ###
 
+        const tempBox = $("<div>", {"class":"tempbox weatherbox"});
+        const tempLabel = $("<h4>").text("Temperature");
+
+        const todaysTemp = $("<p>").text(((today.main.temp - 273.15) * 1.80 + 32).toFixed(1) + "F");
+
+        $(".weather-panel").append(
+            tempBox
+                .append(tempLabel)
+                .append(todaysTemp)
+        );
  
+        // ### Humidity
 
+        const humBox = $("<div>", {"class":"humbox weatherbox"});
+        const humLabel = $("<h4>").text("Humidity");
+
+        $(".weather-panel").append(
+            humBox
+                .append(humLabel)
+                .append($("<p>").text(`${today.main.humidity}%`))
+        )
 
 
 
@@ -152,7 +172,7 @@ function getWeather(cityname) {
         results.append(
             $("<div>", {"class":"forecast"})
                 .append($("<h3>").text("5 Day Forecast"))
-                .append($("<div>", {"class":"day-row"}))
+                .append($("<div>", {"class":"day-row flexwrap"}))
         )
 
         // Add forecast boxes

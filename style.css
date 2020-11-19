@@ -63,11 +63,6 @@ main {
     box-shadow: 0px 0px 5px lavender;
 }
 
-.day-row {
-    display: flex;
-    justify-content: space-around;
-}
-
 .icon-box {
     background-color: rgb(100, 117, 192);
     border: 1px solid black;
@@ -125,11 +120,19 @@ li:hover {
     background-color: lightblue;
 }
 
+.tempbox {
+    background-color: lightsalmon;
+}
+
+.humbox {
+    background-color: rgb(72, 141, 153);
+}
+
 .weatherbox h4 {
     margin: 10px;
 }
 
-.weatherbox div {
+.flexwrap {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
