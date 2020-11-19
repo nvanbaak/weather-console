@@ -1,20 +1,33 @@
 const APIKEY = "&appid=94cca1029aaece9ee895c9d66c20117e";
 
-var responseObj;
+// Set up search history
+const searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
+// Page references
+const errorbox = $("#error");
 
-// search button functionality
-$("#city-submit").on("click", function(event) {
-    event.preventDefault();
+if (searchHistory[0]) {
+    getWeather(searchHistory[0]);
+} else {
+    $("#city-search").text("Seattle");
+    getWeather("Seattle");
+}
 
-    var city = document.getElementById("city-search").value;
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + APIKEY;
+function getWeather(cityname) {
+
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityname + APIKEY;
+
+    // First remove the error box if there is one
+    errorbox.empty();
+
 
     $.ajax({
         url:queryURL,
         method:"GET"
     }).then( function(response) {
         
+        console.log(response);
+
         // Clear results
         $("#results").empty();
 
@@ -27,14 +40,12 @@ $("#city-submit").on("click", function(event) {
         $("#results").append(date);
 
         // Create weather "icon" and append
-        var weatherCondition = response.weather[0].description;
-        weatherCondition = $("<p>").text("The weather is: " + weatherCondition);
+        let iconSrc = `http://openweathermap.org/img/wn/${response.weather[0].icon}.png`;
+         
+        var weatherCondition = $("<img>", {"src":iconSrc});
 
         var weatherBox = $("<div>", {"class":"weather-condition"});
-
         weatherBox.append(weatherCondition);
-
-
         $("#results").append(weatherBox);
 
         // Paste temp into results
@@ -63,12 +74,23 @@ $("#city-submit").on("click", function(event) {
             // Now grab uv index
 
             $("#results").append($("<p>").text("UV Index goes here after a comparison operation tells us what color to make it.  Then we go through a pared-down version of the above code only this time we use the forecast for the next five days."))
-
-
         });
-
-
+    })
+    .catch(err => {
+        
+        errorbox.append(
+            $("<p>").text("Sorry, that city isn't in our records!")
+        )
 
     });
+}
 
+
+// search button functionality
+$("#city-submit").on("click", function(event) {
+    event.preventDefault();
+
+    var city = document.getElementById("city-search").value;
+    
+    getWeather(city)
 });

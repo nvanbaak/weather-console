@@ -1,0 +1,45 @@
+body {
+    background-color: #a8dee7;
+}
+
+.wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    padding: auto;
+}
+
+.content-box {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 0px 10px rgb(189, 189, 189);
+}
+
+header {
+    width: 400px;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+main {
+    width: 400px;
+    text-align: center;
+    margin-bottom: 30px;
+
+}
+
+#results {
+    width: 500px;
+    text-align: center;
+}
+
+#error p {
+    background-color: firebrick;
+    color: whitesmoke;
+    text-align: center;
+    border-radius: 10px;
+}

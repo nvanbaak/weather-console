@@ -5,33 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Console</title>
 
-    <style>
-        .weather-condition {
-            border: 1px solid black;
-            border-radius: 10px;
-            background-color: blanchedalmond;
-            max-width: 200px;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        .small-font {
-            font-size: 8px;
-        }
-    </style>
 </head>
 <body>
 
-    <h1>Weather Forecast</h1>
+    <div class="wrapper">
 
-    <form>
-        <label for="city-search">Enter a city:</label>
-        <input type="text" id="city-search">
-        <button id="city-submit">Search</button>
-    </form>
+        <header class="content-box">
+            <h1>Weather Forecast</h1>
+        </header>
+        
+        <main class="content-box">
+            <form>
+                <label for="city-search">Enter a city:</label>
+                <input type="text" id="city-search">
+                <button id="city-submit">Search</button>
+            </form>
 
-    <section id="results">
-        <h2>Results: </h2>
-    </section>
-
+            <div id="error"></div>
+        </main>
+        
+        <section id="results" class="content-box">
+            <h2>Results: </h2>
+        </section>
+        
+    </div>
 
 
     <!-- jQuery link -->
