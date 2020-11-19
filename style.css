@@ -114,3 +114,22 @@ li {
 li:hover {
     background-color: rgb(197, 175, 182);
 }
+
+.weatherbox {
+    border-radius: 10px;
+    border: 1px solid black;
+    width: 30%;
+}
+
+.conditionbox {
+    background-color: lightblue;
+}
+
+.weatherbox h4 {
+    margin: 10px;
+}
+
+.weatherbox div {
+    display: flex;
+    justify-content: center;
+}

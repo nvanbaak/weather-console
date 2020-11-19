@@ -2,6 +2,7 @@ const APIKEY = "94cca1029aaece9ee895c9d66c20117e";
 
 // Set up search history
 const searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+let currentSearch;
 
 // Page references
 const notifbox = $("#notif");
@@ -48,6 +49,13 @@ function getDayName(dayIndex) {
 
 function getWeather(cityname) {
 
+    // Skip the whole thing if the current city is already in the results
+    if (currentSearch === cityname) {
+        return;
+    } else {
+        currentSearch = cityname;
+    }
+
     let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityname}&appid=${APIKEY}`;
 
     // First remove the error box if there is one
@@ -70,9 +78,10 @@ function getWeather(cityname) {
 
         // Populate search history
         searchHist.empty();
-        searchHist.append($("<h2>").text("Last 10 Searches:"))
 
         let searchLimit = searchHistory.length > 10 ? 10 : searchHistory.length;
+
+        searchHist.append($("<h2>").text(`Last ${searchLimit} Searches:`))
 
         const listory = $("<ul>");
 
@@ -96,7 +105,8 @@ function getWeather(cityname) {
         // Clear results
         results.empty();
 
-        const thisTime = new Date(today.dt * 1000);
+        // Interpret date data
+        const thisTime = new Date(today.dt * 1000); // seconds -> milliseconds
         const todaysDay = `${getDayName(thisTime.getDay())}`;
         const todaysDate = `${thisTime.getMonth()}/${thisTime.getDate()}`;
 
@@ -105,16 +115,38 @@ function getWeather(cityname) {
             .append($("<h2>").text(`——— ${response.city.name} ———`))
             .append($("<h3>").text(`${todaysDay} ${todaysDate}`));
 
+        // Create box for weather
+        
+        // Make box
+        const weatherBox = $("<div>", {"class":"weatherbox conditionbox"})
+
+        // Label the box
+        const weatherLabel = $("<h4>").text("Weather");
+        
+        // Make icon
+        const icon = $("<img>", {"src":`http://openweathermap.org/img/wn/${today.weather[0].icon}.png`});
+
+        // Make label
+        const label = $("<p>").text(today.weather[0].description)
+
+        // append
+        results.append(
+            weatherBox
+                .append(weatherLabel)
+                .append(
+                    $("<div>")
+                        .append(icon)
+                        .append(label)
+                )
+        )
+
+
+ 
 
 
 
 
-
-
-
-
-
-        // ### Day Forecast ###
+        // ### 5 Day Forecast ###
 
         // Create output slot for forecast stuff
         results.append(
@@ -216,3 +248,12 @@ $("#city-submit").on("click", function(event) {
     
     getWeather(city)
 });
+
+// search history functionality
+$(".history").on("click", ( { target } ) => {
+
+    if (target.nodeName === "LI") {
+        getWeather(target.innerText);
+    }
+
+})
