@@ -32,14 +32,62 @@ main {
 
 }
 
-#results {
-    width: 500px;
+#output {
+    width: 600px;
+    height: 500px;
     text-align: center;
+    display: flex;
+    overflow-y: scroll;
 }
 
-#error p {
+#output::-webkit-scrollbar {
+    display: none;
+  }
+
+.history {
+    width: 200px;
+    border-right: 1px solid black; 
+}
+
+#results {
+    text-align: center;
+    width: 400px;
+}
+
+.forecast {
+    background-color: lavender;
+    box-shadow: 5px 0px 5px lavender;
+}
+
+.day-row {
+    display: flex;
+    justify-content: space-around;
+}
+
+.icon-box {
+    background-color: rgb(100, 117, 192);
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.day-row .label {
+    margin: 0px;
+}
+
+.day-row {
+    margin: 5px auto;
+}
+
+#notif .error {
     background-color: firebrick;
     color: whitesmoke;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#notif .welcome {
+    background-color: rgb(106, 209, 66);
     text-align: center;
     border-radius: 10px;
 }

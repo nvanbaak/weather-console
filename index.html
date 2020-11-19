@@ -17,17 +17,22 @@
         </header>
         
         <main class="content-box">
+
             <form>
                 <label for="city-search">Enter a city:</label>
                 <input type="text" id="city-search">
                 <button id="city-submit">Search</button>
             </form>
 
-            <div id="error"></div>
+            <div id="notif"></div>
         </main>
         
-        <section id="results" class="content-box">
-            <h2>Results: </h2>
+        <section id="output" class="content-box">
+            <div class="history">
+                <h2>Last 10 Searches:</h2>
+            </div>
+            <div id = results>
+            </div>
         </section>
         
     </div>
