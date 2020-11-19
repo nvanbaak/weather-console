@@ -25,7 +25,7 @@ The functionality is pretty simple: just type a city into the search bar and it'
 
 ## License
 
-This project uses the MIT license.
+This project uses the GNU license.
 
 ## Visit the deployed page!
 
