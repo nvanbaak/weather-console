@@ -60,6 +60,10 @@ function getWeather(cityname) {
         
         console.log(response);
 
+        // ===============================================
+        //                 SEARCH HISTORY
+        // ===============================================
+
         // If we're here, the search worked, so we can add it to the search history
         searchHistory.unshift(cityname);
         localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
@@ -70,20 +74,47 @@ function getWeather(cityname) {
 
         let searchLimit = searchHistory.length > 10 ? 10 : searchHistory.length;
 
+        const listory = $("<ul>");
+
         for (let i = 0; i < searchLimit; i++) {
-            const searchEl = $("<a>").text(searchHistory[i]);
-            searchHist
-                .append(searchEl)
-                .append($("<br>"));
+            const searchEl = $("<li>").text(searchHistory[i]);
+            listory.append(searchEl);
         }
 
+        searchHist.append(listory)
+
+        // ===============================================
+        //                SEARCH RESULTS
+        // ===============================================
+
+        // ### Today's info ###
+
         // Destructure the list out of the forecast
-        let { list }  = response;
+        const { list }  = response;
+        const today = list[0];
 
         // Clear results
         results.empty();
 
-        // 5 Day Forecast
+        const thisTime = new Date(today.dt * 1000);
+        const todaysDay = `${getDayName(thisTime.getDay())}`;
+        const todaysDate = `${thisTime.getMonth()}/${thisTime.getDate()}`;
+
+        // Add city name and date
+        results
+            .append($("<h2>").text(`——— ${response.city.name} ———`))
+            .append($("<h3>").text(`${todaysDay} ${todaysDate}`));
+
+
+
+
+
+
+
+
+
+
+        // ### Day Forecast ###
 
         // Create output slot for forecast stuff
         results.append(
@@ -124,9 +155,7 @@ function getWeather(cityname) {
 
 
 
-        // // Paste city name to Results
-        // var cityName = $("<h3>").text("——— " + response.name + " ———");
-        // $("#results").append(cityName);
+
 
         // // Paste date into results
         // var date = $("<p>").text(moment().format("dddd, MMM do YYYY"));
