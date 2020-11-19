@@ -25,11 +25,10 @@ The functionality is pretty simple: just type a city into the search bar and it'
 
 ## License
 
-## Visit the deployed page!
-
-> 
-
 This project uses the MIT license.
 
+## Visit the deployed page!
+
+> https://nvanbaak.github.io/weather-console/
 ------
 © 2020 nvanbaak
