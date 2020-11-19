@@ -1,5 +1,35 @@
-# Hey Grader!
+# Weather Console
 
-Hope you're having a nice day.
+![repo-size-badge](https://img.shields.io/github/repo-size/nvanbaak/weather-console)
+![license-badge](https://img.shields.io/github/license/nvanbaak/weather-console)
 
-I completed enough of the assignment to feel confident with API calls.  I demonstrated I could do localStorage juggling on my quiz project, so I'm gonna spend the rest of my evening working on Project 1, as that project has a higher chance of impacting my job search.
+## Table of Contents
+* [Description](#description)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Credits](#credits)
+* [License](#license)
+
+## Description
+
+Weather Console is a skills development exercise to practice using APIs.  It combines user-provided input, dynamic handling of API data, and use of localstorage to save your search history.  Certain content (such as the background color of the UV box and weather icons) changes based on what data is displayed.
+
+## Usage
+
+The functionality is pretty simple: just type a city into the search bar and it'll find it for you.  If the city doesn't exist, it'll display an error message instead of searching and the typo search won't be saved in your search history.  (Though be advised that there are *many* cities in the world and some of them look like typos of other cities -- for example, did you know that Pairs, France is a real place?)
+
+## Credits
+
+* Created by https://github.com/nvanbaak/
+* This project uses the [OpenWeather API](https://openweathermap.org/guide)
+
+## License
+
+## Visit the deployed page!
+
+> 
+
+This project uses the MIT license.
+
+------
+© 2020 nvanbaak
